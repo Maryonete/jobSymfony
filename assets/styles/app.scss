@@ -1,1 +1,18 @@
-@import "~bootstrap/scss/bootstrap";
+@use "~bootstrap/scss/bootstrap";
+:root {
+  --bs-primary: purple;
+}
+.required::after {
+  content: " *";
+  color: red;
+}
+h1 {
+  color: purple;
+}
+/* Sortable tables */
+table.sortable thead {
+  background-color: #eee;
+  color: #666666;
+  font-weight: bold;
+  cursor: default;
+}

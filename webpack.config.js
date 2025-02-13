@@ -52,7 +52,20 @@ Encore
     config.useBuiltIns = "usage";
     config.corejs = "3.38";
   })
-
+  .addLoader({
+    test: /\.scss$/,
+    use: [
+      {
+        loader: "sass-loader",
+        options: {
+          sassOptions: {
+            quietDeps: true,
+            verbose: false,
+          },
+        },
+      },
+    ],
+  })
   // enables Sass/SCSS support
   .enableSassLoader()
   .copyFiles({
