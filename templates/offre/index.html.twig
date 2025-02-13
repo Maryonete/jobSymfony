@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Offre index{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Offre index</h1>
+
+    <table class="table table-striped sortable">
+        <thead>
+            <tr >
+                <th scope="col">Id</th>
+                <th scope="col">DateCandidature</th>
+                <th scope="col">Entreprise</th>
+                <th scope="col">Lieu</th>
+                <th scope="col">Url</th>
+                <th scope="col">Contact</th>
+                <th scope="col">Reponse</th>
+                <th scope="col">Lettre_motivation</th>
+                <th scope="col">Type</th>
+                <th scope="col">Relance_at</th>
+                <th scope="col">Freelance</th>
+                <th scope="col">actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for offre in offres %}
+            {% set url = offre.url is not empty ? 
+                '<a href="' ~ offre.url ~ '" target="_blank"><i class="fa-solid fa-link"></i></a>' 
+                : '' 
+            %}
+            <tr class="{{ offre.reponse == 'NON' ? 'table-dark' : '' }}">
+                <td>{{ offre.id }}</td>
+                <td>{{ offre.dateCandidature ? offre.dateCandidature|date('d-m-Y') : '' }}</td>
+                <td>{{ offre.entreprise }}</td>
+                <td>{{ offre.lieu }}</td>
+                <td>{{ url | raw}}</td>
+                <td>{{ offre.contact }}</td>
+                <td>{{ offre.reponse  }} {{ offre.reponseAt ? offre.reponseAt|date('d-m-Y') : '' }}</td>
+                <td>{{ offre.lettreMotivation ? 'Yes' : '' }}</td>
+                <td>{{ offre.type }}</td>
+                <td>{{ offre.relanceAt ? offre.relanceAt|date('d-m-Y') : '' }}</td>
+                <td>{{ offre.freelance ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('app_offre_show', {'id': offre.id}) }}">show</a>
+                    <a href="{{ path('app_offre_edit', {'id': offre.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="13">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_offre_new') }}">Create new</a>
+</div>
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags("sorttable") }}
+{% endblock %}
