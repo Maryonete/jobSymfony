@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{% block title %}Find a job{% endblock %}</title>
-       <link rel="icon" type="image/png" href="/assets/favicon.ico" />
+       <link rel="icon" type="image/png" href="{{ asset('build/images/favicon.ico') }}" />
     <link
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         rel="stylesheet" />
@@ -13,6 +13,8 @@
       encore_entry_link_tags("app")
     }}
     {% endblock %}
+
+    
   </head>
   <body>
     <div class="container-fluid text-bg-primary">

@@ -42,14 +42,6 @@ final class OffreController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_offre_show', methods: ['GET'])]
-    public function show(Offre $offre): Response
-    {
-        return $this->render('offre/show.html.twig', [
-            'offre' => $offre,
-        ]);
-    }
-
     #[Route('/{id}/edit', name: 'app_offre_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Offre $offre, EntityManagerInterface $entityManager): Response
     {
