@@ -56,6 +56,10 @@ class Offre
     #[ORM\Column(length: 5, nullable: true)]
     private ?string $lettre_motivation = null;
 
+    public function __construct()
+    {
+        $this->type = 'Informatique';
+    }
     public function getId(): ?int
     {
         return $this->id;

@@ -1,4 +1,125 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+     <div class="row">
+        <div class="col-md-4">
+            <div class="mb-3 row align-items-center">
+                <div class="col-sm-2">
+                    {{ form_label(form.type, 'Type', {'label_attr': {'class': 'form-label mb-0'}}) }}
+                </div>
+                <div class="col-sm-10">
+                    <style>
+                        .reversed-radio .form-check-label {
+                            display: flex;
+                            flex-direction: row-reverse;
+                            justify-content: flex-end;
+                            gap: 0.5rem;
+                        }
+                        .reversed-radio .form-check-input {
+                            margin-top: 0.25rem;
+                        }
+                    </style>
+                    <div class="d-flex reversed-radio">
+                        {{ form_widget(form.type, {'attr': {'class': 'form-check-inline'}}) }}
+                    </div>
+                    {{ form_errors(form.type) }}
+                </div>
+            </div>            
+        </div>
+        <div class="col-md-4">
+            <div class="mb-3">
+                {{ form_label(form.lettre_motivation_checkbox, 'Lettre de motivation', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.lettre_motivation_checkbox, {'attr': {'class': 'form-check-input'}}) }}
+                {{ form_errors(form.lettre_motivation_checkbox) }}
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="mb-3">
+                {{ form_label(form.freelance, 'Freelance', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.freelance, {'attr': {'class': 'form-check-input'}}) }}
+                {{ form_errors(form.freelance) }}
+            </div>
+        </div>
+    </div>
+   <div class="row">
+        <div class="col-md-2">
+            <div class="mb-3">
+                {{ form_label(form.dateCandidature, 'Date de candidature', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.dateCandidature, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.dateCandidature) }}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="mb-3">
+                {{ form_label(form.description, 'Poste', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.description) }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="mb-3">
+                {{ form_label(form.entreprise, 'Entreprise', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.entreprise, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.entreprise) }}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="mb-3">
+                {{ form_label(form.lieu, 'Lieu', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.lieu, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.lieu) }}
+            </div>
+        </div>
+    </div>
+    <div class="mb-3">
+        {{ form_label(form.url, 'Lien vers l\'offre', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.url, {'attr': {'class': 'form-control', 'placeholder': 'https://'}}) }}
+        {{ form_errors(form.url) }}
+    </div>
+    <div class="mb-3">
+        {{ form_label(form.contact, 'Contact', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.contact, {'attr': {'class': 'form-control', 'rows': '3'}}) }}
+        {{ form_errors(form.contact) }}
+    </div>
+    
+    <div class="row d-flex">
+        <div class="col-md-4">
+            <div class="mb-3">
+                {{ form_label(form.reponse, 'Réponse', {'label_attr': {'class': 'form-label'}}) }}
+                    {% for choice in form.reponse %}
+                        <div class="form-check form-check-inline">
+                            {{ form_widget(choice, {'attr': {'class': 'form-check-input'}}) }}
+                            {{ form_label(choice, null, {'label_attr': {'class': 'form-check-label'}}) }}
+                        </div>
+                    {% endfor %}
+                {{ form_errors(form.reponse) }}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="mb-3 row align-items-center">
+                <div class="col-sm-2">
+                    {{ form_label(form.reponse_at, 'Date ', {'label_attr': {'class': 'form-label mb-0'}}) }}
+                </div>
+                <div class="col-sm-8">
+                    {{ form_widget(form.reponse_at, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.reponse_at) }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="mb-3">
+                {{ form_label(form.relance_at, 'Date de relance', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.relance_at, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.relance_at) }}
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center">
+        <button type="submit" class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
+    </div>
+
+    
 {{ form_end(form) }}

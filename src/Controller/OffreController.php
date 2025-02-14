@@ -18,7 +18,7 @@ final class OffreController extends AbstractController
     public function index(OffreRepository $offreRepository): Response
     {
         return $this->render('offre/index.html.twig', [
-            'offres' => $offreRepository->findAll(),
+            'offres' => $offreRepository->findBy([], ['id' => 'DESC']),
         ]);
     }
 
@@ -28,12 +28,12 @@ final class OffreController extends AbstractController
         $offre = new Offre();
         $form = $this->createForm(OffreType::class, $offre);
         $form->handleRequest($request);
-
+        // dd($form->getData());
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($offre);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_offre_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('offre/new.html.twig', [
@@ -51,7 +51,7 @@ final class OffreController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_offre_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('offre/edit.html.twig', [
@@ -68,6 +68,6 @@ final class OffreController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_offre_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
     }
 }

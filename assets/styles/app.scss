@@ -9,18 +9,28 @@
 h1 {
   color: purple;
 }
+.form-check {
+  display: inline-block;
+  margin-right: 10px;
+}
+
 /* Sortable tables */
 table.sortable thead {
-  background-color: #eee;
-  color: #666666;
-  font-weight: bold;
-  cursor: default;
+  background-color: #eee !important;
+  color: #666666 !important;
+  font-weight: bold !important;
+  cursor: default !important;
 }
+
 th.sortheader {
   cursor: pointer;
   position: relative;
 }
-
+table.sortable th a {
+  text-decoration: none;
+  display: block;
+  padding-right: 20px;
+}
 th.sortheader:after {
   content: "";
   display: inline-block;
