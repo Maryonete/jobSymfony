@@ -22,27 +22,14 @@
             <header class="d-flex text-bg-primary flex-wrap align-items-center justify-content-between py-3 mb-4 border-bottom">
                 <!-- Colonne pour l'image du logo -->
                 <div class="col-md-3 text-start">
-                    <img src="{{ asset('build/images/flamant.png') }}" alt="logo" width="60px">
+                    <a href="/"><img src="{{ asset('build/images/flamant.png') }}" alt="logo" width="60px"></a>
                 </div>
                 {% if app.user %}
-
-
-                    <!-- Menu de navigation centré -->
-                    <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-                        <li><a href="/" class="nav-link px-2 text-white">Home</a></li>
-                        <li>
-                            <a href="" class="nav-link px-2 text-white">Init BD</a>
-                        </li>
-                    </ul>
-
                     <!-- Colonne pour le bouton de déconnexion -->
                     <div class="col-md-3 text-end">
                         <a href="/logout" class="btn btn-outline-light me-2">Déconnexion</a>
                     </div>
-
                 {% endif %}
-                
-                
             </header>
         </div>
     </div>

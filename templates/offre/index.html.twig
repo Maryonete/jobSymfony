@@ -4,7 +4,11 @@
 
 {% block body %}
 <div class="container">
-    <h1 class="pb-2 border-bottom d-flex justify-content-between">Dashboard
+    <h1 class="pb-2 border-bottom d-flex justify-content-between">Dashboard - {{ offres|length }} candidatures
+
+    <a href="{{ path('app_home', {'reponse' : 'ATT'}) }}"  class="btn btn-light btn-sm">En attente</a>
+    <a href="{{ path('app_home', {'reponse' : 'NON'}) }}"  class="btn btn-secondary btn-sm">Refusée</a>
+
     <a href="{{ path('app_offre_new') }}"><i class="fas fa-plus"></i></a>
     </h1>
 
@@ -40,7 +44,7 @@
                 <td>{{ offre.lieu | raw  }}</td>
                 <td>{{ url | raw }}</td>
                 <td>{{ offre.contact }}</td>
-                <td>{{ offre.reponse == 'NON' ? 'NON' : ''  }} {{ offre.reponseAt ? offre.reponseAt|date('d-m-Y') : '' }}</td>
+                <td>{{ offre.reponse != 'ATTEN' ? offre.reponse : ''  }} {{ offre.reponseAt ? offre.reponseAt|date('d-m-Y') : '' }}</td>
                 <td>{{ type | raw }}</td>
                 <td>{{ offre.relanceAt ? offre.relanceAt|date('d-m-Y') : '' }}</td>
                 <td>{{ offre.freelance ? 'Yes' : 'No' }}</td>

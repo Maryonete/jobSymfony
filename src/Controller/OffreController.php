@@ -14,11 +14,21 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/admin')]
 final class OffreController extends AbstractController
 {
-    #[Route('/', name: 'app_home', methods: ['GET'])]
-    public function index(OffreRepository $offreRepository): Response
-    {
+    #[Route('/{reponse<NON|OUI|ATT>?}', name: 'app_home', methods: ['GET'])]
+    public function index(
+        OffreRepository $offreRepository,
+        ?string $reponse
+    ): Response {
+        $offres = [];
+        if ($reponse == 'ATT') {
+            $offres = $offreRepository->findBy(['reponse' => [$reponse, '']], ['id' => 'DESC']);
+        } elseif ($reponse == 'NON') {
+            $offres = $offreRepository->findBy(['reponse' => $reponse], ['id' => 'DESC']);
+        } else {
+            $offres = $offreRepository->findBy([], ['id' => 'DESC']);
+        }
         return $this->render('offre/index.html.twig', [
-            'offres' => $offreRepository->findBy([], ['id' => 'DESC']),
+            'offres' => $offres,
         ]);
     }
 
@@ -28,7 +38,6 @@ final class OffreController extends AbstractController
         $offre = new Offre();
         $form = $this->createForm(OffreType::class, $offre);
         $form->handleRequest($request);
-        // dd($form->getData());
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($offre);
             $entityManager->flush();

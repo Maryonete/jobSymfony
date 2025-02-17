@@ -70,9 +70,9 @@ class OffreType extends AbstractType
             ->add('reponse', ChoiceType::class, [
                 'label' => 'Réponse',
                 'choices' => [
+                    'en attente'    => 'ATTENTE',
                     'Oui' => 'OUI',
                     'Non' => 'NON',
-                    'En attente' => 'ATTENTE',
                 ],
                 'expanded' => true,
                 'data' => 'ATTENTE',
