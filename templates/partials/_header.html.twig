@@ -24,12 +24,15 @@
                 <div class="col-md-3 text-start">
                     <a href="/"><img src="{{ asset('build/images/flamant.png') }}" alt="logo" width="60px"></a>
                 </div>
-                {% if app.user %}
-                    <!-- Colonne pour le bouton de déconnexion -->
-                    <div class="col-md-3 text-end">
-                        <a href="/logout" class="btn btn-outline-light me-2">Déconnexion</a>
-                    </div>
-                {% endif %}
+                <div class="col-md-3 text-end">
+                    {% if app.user %}
+                        <!-- Colonne pour le bouton de déconnexion -->
+                            <a href="/logout" class="btn btn-outline-light me-2">Déconnexion</a>
+                    {% endif %}
+                    <button id="themeToggle" class="btn btn-secondary">
+                        <i id="themeIcon" class="fa-solid fa-moon"></i>
+                    </button>
+                </div>
             </header>
         </div>
     </div>
