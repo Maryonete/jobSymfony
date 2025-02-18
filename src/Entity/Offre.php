@@ -56,6 +56,21 @@ class Offre
     #[ORM\Column(length: 5, nullable: true)]
     private ?string $lettre_motivation = null;
 
+    /**
+     * @var bool|null
+     */
+    private ?bool $isUrlValid = null;
+
+    public function setIsUrlValid(bool $isUrlValid): self
+    {
+        $this->isUrlValid = $isUrlValid;
+        return $this;
+    }
+
+    public function getIsUrlValid(): ?bool
+    {
+        return $this->isUrlValid;
+    }
     public function __construct()
     {
         $this->type = 'Informatique';
@@ -105,6 +120,26 @@ class Offre
     {
         return $this->url;
     }
+    public function getSiteNameFromUrl(): ?string
+    {
+        if (!$this->url) {
+            return null;
+        }
+
+        $parsedUrl = parse_url($this->url);
+        $host = $parsedUrl['host'] ?? null;
+
+        if ($host) {
+            // Supprime "www." au début et l'extension (.fr, .com, etc.) à la fin
+            $host = preg_replace('/^www\./', '', $host); // Enlève "www."
+            $host = preg_replace('/\.[a-z]{2,}$/', '', $host); // Enlève l'extension
+        }
+
+        return $host;
+    }
+
+
+
 
     public function setUrl(string $url): static
     {

@@ -12,7 +12,13 @@
         <td>{{ offre.dateCandidature ? offre.dateCandidature|date('d-m-Y') : '' }}</td>
         <td>{{ offre.entreprise | raw  }}</td>
         <td>{{ offre.lieu | raw  }}</td>
-        <td>{{ url | raw }}</td>
+        <td>{{ url | raw }}
+        {% if offre.isUrlValid() is not same as(false) %}
+                    <span class="text-danger">Invalide</span>
+                {% endif %}</td>
+        <td>{% if offre.getSiteNameFromUrl() %}
+       {{ offre.getSiteNameFromUrl() }}
+        {% endif %}</td>
         <td>{{ offre.contact }}</td>
         <td>{{ offre.reponse != 'ATTEN' ? offre.reponse : ''  }} {{ offre.reponseAt ? offre.reponseAt|date('d-m-Y') : '' }}</td>
         <td>{{ offre.relanceAt ? offre.relanceAt|date('d-m-Y') : '' }}</td>

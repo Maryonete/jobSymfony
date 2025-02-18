@@ -23,6 +23,7 @@ Encore
   .addEntry("app", "./assets/js/app.js")
   .addEntry("sorttable", "./assets/js/sorttable.js")
   .addEntry("themeToggle", "./assets/js/themeToggle.js")
+  .addEntry("importOffre", "./assets/js/importOffre.js")
 
   // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
   .splitEntryChunks()
