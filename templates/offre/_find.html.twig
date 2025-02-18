@@ -1,0 +1,29 @@
+
+<form>
+
+<input type="text" id="search" placeholder="entreprise, lieu, contact" class="form-control" />
+</form>
+
+
+<script>
+document.getElementById('search').addEventListener('input', function() {
+    let query = this.value.trim();
+
+    if (query.length < 2) { // Évite les requêtes inutiles
+        return;
+    }
+
+    fetch('/admin/find/' + encodeURIComponent(query), {
+        method: 'POST',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest' // Pour différencier les requêtes AJAX
+        }
+    })
+    .then(response => response.text()) // Récupère le HTML du serveur
+    .then(html => {
+        document.querySelector("#myTable tbody").innerHTML = html;
+    })
+    .catch(error => console.error('Erreur:', error));
+});
+</script>
+

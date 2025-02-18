@@ -16,20 +16,21 @@ class OffreRepository extends ServiceEntityRepository
         parent::__construct($registry, Offre::class);
     }
 
-    //    /**
-    //     * @return Offre[] Returns an array of Offre objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('o')
-    //            ->andWhere('o.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('o.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    /**
+     * @return Offre[] Returns an array of Offre objects
+     */
+    public function findByMotsCles($value): array
+    {
+        return $this->createQueryBuilder('o')
+            ->andWhere('o.entreprise like :val')
+            ->orWhere('o.lieu like :val')
+            ->orWhere('o.contact like :val')
+            ->setParameter('val', '%' . $value . '%')
+            ->orderBy('o.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
     //    public function findOneBySomeField($value): ?Offre
     //    {

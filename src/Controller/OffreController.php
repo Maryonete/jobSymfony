@@ -3,13 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\Offre;
+use Twig\Environment;
 use App\Form\OffreType;
 use App\Repository\OffreRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/admin')]
 final class OffreController extends AbstractController
@@ -78,5 +80,14 @@ final class OffreController extends AbstractController
         }
 
         return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
+    }
+    #[Route('/find/{find}', name: 'app_offre_find', methods: ['POST'])]
+    public function find(string $find, OffreRepository $offreRepository, Environment $twig): Response
+    {
+        $offres = $offreRepository->findByMotsCles($find);
+
+        return new Response($twig->render('offre/_tbody.html.twig', [
+            'offres' => $offres
+        ]));
     }
 }

@@ -1,0 +1,34 @@
+<tbody>
+{% for offre in offres %}
+    {% set 
+        url = offre.url is not empty ? 
+        '<a href="' ~ offre.url ~ '" target="_blank"><i class="fa-solid fa-link"></i></a>' 
+        : ''  %}
+    {% set type = offre.type == 'Informatique' ? '<i class="fa-solid fa-computer" title="Informatique"></i>' 
+            : '<i class="fa-regular fa-face-frown-open" style="color:red" title="Autre"></i>'
+    %}
+    <tr class="{{ offre.reponse == 'NON' ? 'table-dark' : '' }}">
+        <td>{{ offre.id }}</td>
+        <td>{{ offre.dateCandidature ? offre.dateCandidature|date('d-m-Y') : '' }}</td>
+        <td>{{ offre.entreprise | raw  }}</td>
+        <td>{{ offre.lieu | raw  }}</td>
+        <td>{{ url | raw }}</td>
+        <td>{{ offre.contact }}</td>
+        <td>{{ offre.reponse != 'ATTEN' ? offre.reponse : ''  }} {{ offre.reponseAt ? offre.reponseAt|date('d-m-Y') : '' }}</td>
+        <td>{{ offre.relanceAt ? offre.relanceAt|date('d-m-Y') : '' }}</td>
+        <td>
+            <span class="d-flex align-items-center gap-2">
+                {{ offre.freelance == 'Yes' ? '<i class="fa-solid fa-house-laptop" title="Freelance"></i>' : '' }} 
+                {{ type | raw }}
+            </span>
+        </td>
+        <td>
+            <a href="{{ path('app_offre_edit', {'id': offre.id}) }}" alt="MAJ"><i class="fa-solid fa-pen" title="MAJ"></i></a>
+        </td>
+    </tr>
+{% else %}
+    <tr>
+        <td colspan="13">no records found</td>
+    </tr>
+{% endfor %}
+</tbody>

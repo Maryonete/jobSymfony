@@ -6,12 +6,11 @@
 <div class="container">
     <h1 class="pb-2 border-bottom d-flex justify-content-between">Dashboard - {{ offres|length }} candidatures
 
-    <a href="{{ path('app_home', {'reponse' : 'ATT'}) }}"  class="btn btn-light btn-sm">En attente</a>
-    <a href="{{ path('app_home', {'reponse' : 'NON'}) }}"  class="btn btn-secondary btn-sm">Refusée</a>
-
+    <a href="{{ path('app_home', {'reponse' : 'ATT'}) }}"  class="btn btn-light btn-sm">Candidatures en attente</a>
+    <a href="{{ path('app_home', {'reponse' : 'NON'}) }}"  class="btn btn-secondary btn-sm">Candidatures refusée</a>
+    {% include "offre/_find.html.twig" %}
     <a href="{{ path('app_offre_new') }}"><i class="fas fa-plus"></i></a>
     </h1>
-
     <table class="table table-striped sortable" id="myTable">
         <thead>
             <tr >
@@ -22,45 +21,14 @@
                 <th scope="col" class="unsortable">Url</th>
                 <th scope="col">Contact</th>
                 <th scope="col">Reponse</th>
-                <th scope="col"></th>
                 <th scope="col">Relance</th>
-                <th scope="col">Freelance</th>
+                <th scope="col"></th>
                 <th scope="col" class="unsortable">actions</th>
             </tr>
         </thead>
-        <tbody>
-        {% for offre in offres %}
-            {% set 
-                url = offre.url is not empty ? 
-                '<a href="' ~ offre.url ~ '" target="_blank"><i class="fa-solid fa-link"></i></a>' 
-                : ''  %}
-            {% set type = offre.type == 'Informatique' ? '<i class="fa-solid fa-computer"></i>' 
-                    : '<i class="fa-regular fa-face-frown-open"  style="color:red"></i>'
-            %}
-            <tr class="{{ offre.reponse == 'NON' ? 'table-dark' : '' }}">
-                <td>{{ offre.id }}</td>
-                <td>{{ offre.dateCandidature ? offre.dateCandidature|date('d-m-Y') : '' }}</td>
-                <td>{{ offre.entreprise | raw  }}</td>
-                <td>{{ offre.lieu | raw  }}</td>
-                <td>{{ url | raw }}</td>
-                <td>{{ offre.contact }}</td>
-                <td>{{ offre.reponse != 'ATTEN' ? offre.reponse : ''  }} {{ offre.reponseAt ? offre.reponseAt|date('d-m-Y') : '' }}</td>
-                <td>{{ type | raw }}</td>
-                <td>{{ offre.relanceAt ? offre.relanceAt|date('d-m-Y') : '' }}</td>
-                <td>{{ offre.freelance ? 'Yes' : 'No' }}</td>
-                <td>
-                    <a href="{{ path('app_offre_edit', {'id': offre.id}) }}"><i class="fa-solid fa-pen"></i></a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="13">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
+        {% include "offre/_tbody.html.twig" %}
     </table>
 
-    <a href="{{ path('app_offre_new') }}">Create new</a>
 </div>
 
 {% endblock %}
