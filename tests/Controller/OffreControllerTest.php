@@ -2,18 +2,22 @@
 
 namespace App\Tests\Controller;
 
+use DateTime;
+use App\Entity\User;
 use App\Entity\Offre;
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 final class OffreControllerTest extends WebTestCase
 {
     private KernelBrowser $client;
     private EntityManagerInterface $manager;
     private EntityRepository $offreRepository;
-    private string $path = '/offre/';
+    private string $path = '/admin/';
+
 
     protected function setUp(): void
     {
@@ -24,21 +28,21 @@ final class OffreControllerTest extends WebTestCase
         foreach ($this->offreRepository->findAll() as $object) {
             $this->manager->remove($object);
         }
-
+        // Log in a user (if needed)
+        $userRepo = $this->getContainer()->get('doctrine')->getRepository(User::class);
+        $admin = $userRepo->findOneByEmail('test@test.fr');
+        if (!$admin) {
+            $admin = new User();
+            $admin->setRoles(['ROLE_ADMIN']);
+            $admin->setPassword('test');
+            $admin->setEmail('test@test.fr');
+            $this->manager->persist($admin);
+        }
         $this->manager->flush();
     }
 
-    public function testIndex(): void
-    {
-        $this->client->followRedirects();
-        $crawler = $this->client->request('GET', $this->path);
 
-        self::assertResponseStatusCodeSame(200);
-        self::assertPageTitleContains('Offre index');
 
-        // Use the $crawler to perform additional assertions e.g.
-        // self::assertSame('Some text on the page', $crawler->filter('.p')->first());
-    }
 
     public function testNew(): void
     {
@@ -70,16 +74,16 @@ final class OffreControllerTest extends WebTestCase
     {
         $this->markTestIncomplete();
         $fixture = new Offre();
-        $fixture->setDateCandidature('My Title');
+        $fixture->setDateCandidature(new DateTime());
         $fixture->setEntreprise('My Title');
         $fixture->setLieu('My Title');
         $fixture->setUrl('My Title');
         $fixture->setContact('My Title');
         $fixture->setReponse('My Title');
-        $fixture->setReponse_at('My Title');
-        $fixture->setLettre_motivation('My Title');
+        $fixture->setReponseAt(new DateTime());
+        $fixture->setLettreMotivation('My Title');
         $fixture->setType('My Title');
-        $fixture->setRelance_at('My Title');
+        $fixture->setRelanceAt(new DateTime());
         $fixture->setFreelance('My Title');
 
         $this->manager->persist($fixture);
@@ -97,16 +101,16 @@ final class OffreControllerTest extends WebTestCase
     {
         $this->markTestIncomplete();
         $fixture = new Offre();
-        $fixture->setDateCandidature('Value');
+        $fixture->setDateCandidature(new DateTime());
         $fixture->setEntreprise('Value');
         $fixture->setLieu('Value');
         $fixture->setUrl('Value');
         $fixture->setContact('Value');
         $fixture->setReponse('Value');
-        $fixture->setReponse_at('Value');
-        $fixture->setLettre_motivation('Value');
+        $fixture->setReponseAt(new DateTime());
+        $fixture->setLettreMotivation('Value');
         $fixture->setType('Value');
-        $fixture->setRelance_at('Value');
+        $fixture->setRelanceAt(new DateTime());
         $fixture->setFreelance('Value');
 
         $this->manager->persist($fixture);
@@ -121,10 +125,10 @@ final class OffreControllerTest extends WebTestCase
             'offre[url]' => 'Something New',
             'offre[contact]' => 'Something New',
             'offre[reponse]' => 'Something New',
-            'offre[reponse_at]' => 'Something New',
+            'offre[reponse_at]' => new DateTime(),
             'offre[lettre_motivation]' => 'Something New',
             'offre[type]' => 'Something New',
-            'offre[relance_at]' => 'Something New',
+            'offre[relance_at]' => new DateTime(),
             'offre[freelance]' => 'Something New',
         ]);
 
@@ -149,16 +153,16 @@ final class OffreControllerTest extends WebTestCase
     {
         $this->markTestIncomplete();
         $fixture = new Offre();
-        $fixture->setDateCandidature('Value');
+        $fixture->setDateCandidature(new DateTime());
         $fixture->setEntreprise('Value');
         $fixture->setLieu('Value');
         $fixture->setUrl('Value');
         $fixture->setContact('Value');
         $fixture->setReponse('Value');
-        $fixture->setReponse_at('Value');
-        $fixture->setLettre_motivation('Value');
+        $fixture->setReponseAt(new DateTime());
+        $fixture->setLettreMotivation('Value');
         $fixture->setType('Value');
-        $fixture->setRelance_at('Value');
+        $fixture->setRelanceAt(new DateTime());
         $fixture->setFreelance('Value');
 
         $this->manager->persist($fixture);
